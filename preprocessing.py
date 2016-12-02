@@ -1,5 +1,5 @@
 #python preprocessing.py higgs-reply_network.edgelist higgs-mention_network.edgelist higgs-social_network.edgelist
-#python preprocessing.py higgs-reply_network.edgelist higgs-mention_network.edgelist higgs-retweet_network.edgelist
+#python preprocessing.py data/higgs-reply_network.edgelist data/higgs-mention_network.edgelist data/higgs-retweet_network.edgelist
 import sys
 import  networkx as nx
 import numpy as np
@@ -21,10 +21,10 @@ def generate_graph(filename):
         G = nx.read_edgelist(inf, delimiter=" ", nodetype=str, data=(('weight',float),))
     return G
 
-def filter_nodes(G_reply, G_mention, G_retweet):
-    G_mention = G_mention.subgraph(G_reply.nodes())
-    G_retweet = G_retweet.subgraph(G_reply.nodes())
-    return G_mention, G_retweet
+def filter_nodes(G1, G2, G3):
+    G2 = G2.subgraph(G1.nodes())
+    G3 = G3.subgraph(G1.nodes())
+    return G2, G3
  
 
 def main():
@@ -43,6 +43,10 @@ def main():
     print ("nodes in retweet: ", nx.number_of_nodes(G_retweet))
     print "Filtering..."
     G_mention, G_retweet = filter_nodes(G_reply,G_mention,G_retweet)
+    print ("nodes in reply: ", nx.number_of_nodes(G_reply))
+    print ("nodes in mention: ", nx.number_of_nodes(G_mention))
+    print ("nodes in retweet: ", nx.number_of_nodes(G_retweet))
+    G_reply, G_mention = filter_nodes(G_retweet,G_reply,G_mention)
     print ("nodes in reply: ", nx.number_of_nodes(G_reply))
     print ("nodes in mention: ", nx.number_of_nodes(G_mention))
     print ("nodes in retweet: ", nx.number_of_nodes(G_retweet))
