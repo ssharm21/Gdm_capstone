@@ -4,6 +4,7 @@ import sys
 import  networkx as nx
 import numpy as np
 import csv
+import grassman
 
 def generate_graph2(filename1, list_of_nodes):
     G=nx.Graph()
@@ -45,7 +46,7 @@ def main():
     print ("nodes in reply: ", nx.number_of_nodes(G_reply))
     print ("nodes in mention: ", nx.number_of_nodes(G_mention))
     print ("nodes in retweet: ", nx.number_of_nodes(G_retweet))
-
+    print grassman.findClustersGrassman([G_reply,G_mention,G_retweet],6)
 
 if __name__ == '__main__':
     main()
