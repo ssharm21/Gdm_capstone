@@ -26,16 +26,23 @@ def getModifiedLap(lap_list, subspace_list, alpha):
 	Gives modified laplacian according to eq (8)
 	"""
 	n = lap_list[0].shape[0]
-	uu_dash = [csr_matrix(u.dot(u.T)) for u in subspace_list]
-	lap_sum = np.zeros((n,n))
-	uu_sum = np.zeros((n,n))
-
+	uu_dash = [u.dot(u.T) for u in subspace_list]
+        print "computed uu_dash"
+	lap_sum = csr_matrix(np.zeros((n,n)))
+        print "computed lap_sum"
+	uu_sum = csr_matrix(np.zeros((n,n)))
+        print "computed uu_sum"
+        print type(uu_dash[0])
+        print type(lap_list[0])
+        print type(lap_sum[0])
+        exit()
 	for L in lap_list:
 		lap_sum = np.add(lap_sum,L)
-	for u in uu_sum:
+        print "Computed L for loop"
+	for u in uu_dash:
 		uu_sum = np.add(uu_sum,u)
-
-	return np.subtract(lap_sum, aplpha * uu_dash) 
+        print "Computed U for loop"
+	return np.subtract(lap_sum, alpha * uu_sum) 
 
 def findClustersGrassman(graph_list, k):
 	"""
@@ -57,5 +64,6 @@ def findClustersGrassman(graph_list, k):
 
 	#find clusters in U transpose
 	centroids, labels = kmeans2(U.T,k,iter=20)
+        print labels
 
 	return labels
