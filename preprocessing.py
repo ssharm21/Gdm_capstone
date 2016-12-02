@@ -1,5 +1,6 @@
 #python preprocessing.py higgs-reply_network.edgelist higgs-mention_network.edgelist higgs-social_network.edgelist
 #python preprocessing.py data/higgs-reply_network.edgelist data/higgs-mention_network.edgelist data/higgs-retweet_network.edgelist
+#python preprocessing.py data/edge_list_airline-europe_layer1.txt data/edge_list_airline-europe_layer2.txt data/edge_list_airline-europe_layer4.txt
 import sys
 import  networkx as nx
 import numpy as np
@@ -51,12 +52,12 @@ def main():
     print ("nodes in mention: ", nx.number_of_nodes(G_mention))
     print ("nodes in retweet: ", nx.number_of_nodes(G_retweet))
     print ("selecting 500 nodes")
-    G_reply = G_reply.subgraph(list(G_reply.nodes())[0:200])
+    G_reply = G_reply.subgraph(list(G_reply.nodes())[0:5000])
     G_mention, G_retweet = filter_nodes(G_reply,G_mention,G_retweet)
     print ("nodes in reply: ", nx.number_of_nodes(G_reply))
     print ("nodes in mention: ", nx.number_of_nodes(G_mention))
     print ("nodes in retweet: ", nx.number_of_nodes(G_retweet))
-    print grassman.findClustersGrassman([G_reply,G_mention,G_retweet],6)
+    print grassman.findClustersGrassman([G_reply,G_mention,G_retweet],4)
 
 if __name__ == '__main__':
     main()
