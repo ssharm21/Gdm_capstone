@@ -5,6 +5,7 @@ from scipy.cluster.vq import kmeans2
 import networkx as nx
 import scipy.sparse.linalg as la
 from scipy.sparse import csr_matrix
+from sklearn.preprocessing import normalize
 
 def getEigenDecomposition(lap, k):
 	"""
@@ -19,7 +20,7 @@ def getEigenDecomposition(lap, k):
 	print type(top_vecs)
 	#print top_vecs
 	print type(np.vstack(top_vecs).T)
-	return csr_matrix(np.vstack(top_vecs).T)
+	return csr_matrix(np.vstack(top_vecs).T)	
 
 def getModifiedLap(lap_list, subspace_list, alpha):
 	"""
@@ -27,17 +28,17 @@ def getModifiedLap(lap_list, subspace_list, alpha):
 	"""
 	n = lap_list[0].shape[0]
 	uu_dash = [u.dot(u.T) for u in subspace_list]
-        print "computed uu_dash"
+	print "computed uu_dash"
 	lap_sum = np.zeros((n,n))
-        print "computed lap_sum"
+	print "computed lap_sum"
 	uu_sum = np.zeros((n,n))
-        print "computed uu_sum"
+	print "computed uu_sum"
 	for L in lap_list:
 		lap_sum = np.add(lap_sum,L.todense())
-        print "Computed L for loop"
+	print "Computed L for loop"
 	for u in uu_dash:
 		uu_sum = np.add(uu_sum,u.todense())
-        print "Computed U for loop"
+	print "Computed U for loop"
 	return np.subtract(lap_sum, alpha * uu_sum) 
 
 def findClustersGrassman(graph_list, k):
@@ -57,9 +58,15 @@ def findClustersGrassman(graph_list, k):
 	Lmod = getModifiedLap(laplacian_list,subspace_list, alpha)
 
 	U = getEigenDecomposition(Lmod, k).real.todense()
-        print U.shape
+	U = normalize(U, axis=1, norm='l1')
+
 	#find clusters in U transpose
 	centroids, labels = kmeans2(U,k,iter=20)
-        print centroids
-
+	colors = {}
+	for v,c in enumerate(labels):
+		if c in colors:
+			colors[c] += 1
+		else:
+			colors[c] = 0
+	print colors
 	return labels

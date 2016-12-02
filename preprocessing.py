@@ -57,7 +57,7 @@ def main():
     print ("nodes in reply: ", nx.number_of_nodes(G_reply))
     print ("nodes in mention: ", nx.number_of_nodes(G_mention))
     print ("nodes in retweet: ", nx.number_of_nodes(G_retweet))
-    print grassman.findClustersGrassman([G_reply,G_mention,G_retweet],4)
+    print grassman.findClustersGrassman([G_reply,G_mention,G_retweet],10)
 
 if __name__ == '__main__':
     main()
