@@ -35,11 +35,10 @@ def getModifiedLap(lap_list, subspace_list, alpha):
 	
 	return np.subtract(lap_sum, alpha * uu_sum) 
 
-def findClustersGrassman(graph_list, k):
+def findClustersGrassman(graph_list, k, alpha):
 	"""
 	graph_list : List of nx graphs Gi representing differnet layers
 	"""
-	alpha = 0.5
 	num_layers = len(graph_list)
 
 	print 'Finding clusters using subspace analysis on Grassman Manifolds....'

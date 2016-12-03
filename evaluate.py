@@ -14,13 +14,14 @@ def number_of_nodes_in_cluster(labels):
 def find_avg_cluster_density(labels, graph_list):
     order = sorted(graph_list[0].nodes())
     colors = {}
+    num_layers = len(graph_list)
     for i,c in enumerate(labels):
         if c in colors:
             colors[c] += [order[i]]
 	else:
 	    colors[c] = [order[i]]
-    density = np.zeros((len(graph_list),len(colors)))
-    conductance = np.zeros((len(graph_list),len(colors)))
+    density = np.zeros((num_layers,len(colors)))
+    conductance = np.zeros((num_layers,len(colors)))
     for i,g in enumerate(graph_list):
         A = nx.adjacency_matrix(g).todense()
         for k in colors:
@@ -38,6 +39,9 @@ def find_avg_cluster_density(labels, graph_list):
     print np.mean(density,axis=0)
     print "Conductance found for each cluster across all layers:"
     print np.mean(conductance,axis=0)
+    mean_density = np.sum(np.mean(density,axis=0))/num_layers
+    mean_conductance = np.sum(np.mean(conductance,axis=0))/num_layers
+    return mean_density, mean_density
 
         
     
