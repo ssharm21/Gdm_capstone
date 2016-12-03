@@ -15,6 +15,7 @@ def getEigenDecomposition(lap, k):
 	"""
 	print lap.shape, type(lap)
 	eig_val, eig_vec  = la.eigs(lap)
+	print 'eigen computed'
 	top_indices = np.argsort(eig_val)[-k:]
 	top_vecs = [eig_vec[:,i].transpose() for i in top_indices]
 	print type(top_vecs)

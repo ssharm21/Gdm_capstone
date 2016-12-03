@@ -7,6 +7,7 @@ import numpy as np
 import csv
 import grassman
 import evaluate
+import random
 
 def generate_graph2(filename1, list_of_nodes):
     G=nx.Graph()
@@ -53,14 +54,17 @@ def main():
     print ("nodes in mention: ", nx.number_of_nodes(G_mention))
     print ("nodes in retweet: ", nx.number_of_nodes(G_retweet))
     print ("selecting 500 nodes")
-    G_reply = G_reply.subgraph(list(G_reply.nodes())[0:5000])
+
+    sel_idx = random.sample(range(21346),3000)
+    #G_reply = G_reply.subgraph(list(G_reply.nodes())[0:4000])
+    G_reply = G_reply.subgraph([n for i,n in enumerate(G_reply.nodes()) if i in sel_idx])
     G_mention, G_retweet = filter_nodes(G_reply,G_mention,G_retweet)
     print ("nodes in reply: ", nx.number_of_nodes(G_reply))
     print ("nodes in mention: ", nx.number_of_nodes(G_mention))
     print ("nodes in retweet: ", nx.number_of_nodes(G_retweet))
     
     graph_list = [G_reply,G_mention,G_retweet]
-    labels = grassman.findClustersGrassman(graph_list,10)
+    labels = grassman.findClustersGrassman(graph_list,5)
     evaluate.find_avg_cluster_density(labels,graph_list)
 
 if __name__ == '__main__':
