@@ -9,6 +9,7 @@ import grassman
 import evaluate
 import random
 import os
+import matplotlib.pyplot as plt
 
 def generate_graph2(filename1, list_of_nodes):
 	G=nx.Graph()
@@ -30,9 +31,16 @@ def filter_nodes(G1, G2, G3):
 	G3 = G3.subgraph(G1.nodes())
 	return G2, G3
  
-def getClusters(graph_list):
-	labels = grassman.findClustersGrassman(graph_list,5)
-	evaluate.find_avg_cluster_density(labels,graph_list)
+def getClusters(graph_list, k, alpha):
+	labels = grassman.findClustersGrassman(graph_list,k,alpha)
+	return evaluate.evaluateClusters(labels,graph_list)
+
+def plotData(Y,X,x_label,y_label,title):
+	plt.plot(X,Y)
+	plt.title(title)
+	plt.xlabel(x_label)
+	plt.ylabel(y_label)
+	plt.show()
 
 def main():
 	PATH = './data'
@@ -80,6 +88,15 @@ def main():
 	print ("nodes in retweet: ", nx.number_of_nodes(G_retweet))
 	graph_list = [G_reply,G_retweet,G_mention]
 
+	alphas = np.arange(0.2,1.2,0.2)
+	density = []
+	conductance = []
+	for alpha in alphas:
+		den, cond = getClusters(graph_list,10,alpha)
+		density.append(den)
+		conductance.append(cond)
+	plotData(density,alphas,'alpha','Avg. cluster density','Density vs alpha')
+	plotData(conductance,alphas,'alpha','Avg cluster condutance','Conductance vs alpha')
 
 if __name__ == '__main__':
 	main()

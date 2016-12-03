@@ -13,7 +13,6 @@ def getEigenDecomposition(lap, k):
 	k: reduced dimesnion
 	returns nXk sparse matrix after eigen decomposition
 	"""
-	print lap.shape, type(lap)
 	eig_val, eig_vec  = la.eigs(lap)
 	top_indices = np.argsort(eig_val)[-k:]
 	top_vecs = [eig_vec[:,i].transpose() for i in top_indices]
