@@ -69,7 +69,9 @@ def main():
     
     graph_list = [G_reply,G_mention,G_retweet]
     labels = grassman.findClustersGrassman(graph_list,5)
+    evaluate.number_of_nodes_in_cluster(labels)
     evaluate.find_avg_cluster_density(labels,graph_list)
+
 
 if __name__ == '__main__':
     main()

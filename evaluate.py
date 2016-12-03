@@ -10,6 +10,7 @@ def number_of_nodes_in_cluster(labels):
             colors[c] += 1
 	else:
 	    colors[c] = 0
+    print colors
 
 def find_avg_cluster_density(labels, graph_list):
     order = sorted(graph_list[0].nodes())
@@ -33,7 +34,10 @@ def find_avg_cluster_density(labels, graph_list):
             cs = 0
             for cv in cluster_vertex:
                 cs += len(set(g.neighbors(cv))-set(cluster_vertex))
-            conductance[i,k] = float(cs)/((2*ms)+cs)
+                if ms == 0 and cs == 0:
+                    conductance[i,k] = 1
+                else:
+                    conductance[i,k] = float(cs)/((2*ms)+cs)
     print "Density found for each cluster across all layers:"
     print np.mean(density,axis=0)
     print "Conductance found for each cluster across all layers:"
