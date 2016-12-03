@@ -6,6 +6,7 @@ import  networkx as nx
 import numpy as np
 import csv
 import grassman
+import evaluate
 
 def generate_graph2(filename1, list_of_nodes):
     G=nx.Graph()
@@ -19,7 +20,7 @@ def generate_graph2(filename1, list_of_nodes):
 
 def generate_graph(filename):
     with open(filename, 'rb') as inf:
-        G = nx.read_edgelist(inf, delimiter=" ", nodetype=str, data=(('weight',float),))
+        G = nx.read_edgelist(inf, delimiter=" ", nodetype=int, data=(('weight',float),))
     return G
 
 def filter_nodes(G1, G2, G3):
@@ -57,7 +58,10 @@ def main():
     print ("nodes in reply: ", nx.number_of_nodes(G_reply))
     print ("nodes in mention: ", nx.number_of_nodes(G_mention))
     print ("nodes in retweet: ", nx.number_of_nodes(G_retweet))
-    print grassman.findClustersGrassman([G_reply,G_mention,G_retweet],10)
+    
+    graph_list = [G_reply,G_mention,G_retweet]
+    labels = grassman.findClustersGrassman(graph_list,10)
+    evaluate.find_avg_cluster_density(labels,graph_list)
 
 if __name__ == '__main__':
     main()

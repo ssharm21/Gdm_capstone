@@ -49,24 +49,19 @@ def findClustersGrassman(graph_list, k):
 	num_layers = len(graph_list)
 
 	#list of normalized Laplacian matrix Li for all Gi
-	laplacian_list = [nx.normalized_laplacian_matrix(g)
+	laplacian_list = [nx.normalized_laplacian_matrix(g, nodelist = sorted(g.nodes()))
 	 for g in graph_list]
-
+        print "lap"
 	#list of subspace representation Ui for all Gi
 	subspace_list = [getEigenDecomposition(l, k) for l in laplacian_list]
-
+        print "subspace"
 	Lmod = getModifiedLap(laplacian_list,subspace_list, alpha)
-
+        print "Lmod"
 	U = getEigenDecomposition(Lmod, k).real.todense()
+        print "Eigen"
 	U = normalize(U, axis=1, norm='l1')
-
+        print "norm"
 	#find clusters in U transpose
 	centroids, labels = kmeans2(U,k,iter=20)
-	colors = {}
-	for v,c in enumerate(labels):
-		if c in colors:
-			colors[c] += 1
-		else:
-			colors[c] = 0
-	print colors
+
 	return labels
