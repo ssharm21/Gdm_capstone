@@ -38,25 +38,29 @@ def main():
     print "Graph reply created"
     G_mention = generate_graph(mention_file)
     print "Graph mention created"
-    #G_social = generate_graph2(social_file, list(G_reply.nodes()))
     G_retweet = generate_graph(retweet_file)
     print "Graph retweet created"
+    '''
     print ("nodes in reply: ", nx.number_of_nodes(G_reply))
     print ("nodes in mention: ", nx.number_of_nodes(G_mention))
     print ("nodes in retweet: ", nx.number_of_nodes(G_retweet))
     print "Filtering..."
+    '''
     G_mention, G_retweet = filter_nodes(G_reply,G_mention,G_retweet)
+    '''
     print ("nodes in reply: ", nx.number_of_nodes(G_reply))
     print ("nodes in mention: ", nx.number_of_nodes(G_mention))
     print ("nodes in retweet: ", nx.number_of_nodes(G_retweet))
+    '''
     G_reply, G_mention = filter_nodes(G_retweet,G_reply,G_mention)
+    '''
     print ("nodes in reply: ", nx.number_of_nodes(G_reply))
     print ("nodes in mention: ", nx.number_of_nodes(G_mention))
     print ("nodes in retweet: ", nx.number_of_nodes(G_retweet))
-    print ("selecting 500 nodes")
+    '''
+    print ("selecting 3000 nodes")
 
     sel_idx = random.sample(range(21346),3000)
-    #G_reply = G_reply.subgraph(list(G_reply.nodes())[0:4000])
     G_reply = G_reply.subgraph([n for i,n in enumerate(G_reply.nodes()) if i in sel_idx])
     G_mention, G_retweet = filter_nodes(G_reply,G_mention,G_retweet)
     print ("nodes in reply: ", nx.number_of_nodes(G_reply))
