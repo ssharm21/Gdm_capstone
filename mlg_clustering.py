@@ -88,15 +88,15 @@ def main():
 	print ("nodes in retweet: ", nx.number_of_nodes(G_retweet))
 	graph_list = [G_reply,G_retweet,G_mention]
 
-	alphas = np.arange(0.2,1.2,0.2)
-	density = []
-	conductance = []
-	for alpha in alphas:
-		den, cond = getClusters(graph_list,10,alpha)
-		density.append(den)
-		conductance.append(cond)
-	plotData(density,alphas,'alpha','Avg. cluster density','Density vs alpha')
-	plotData(conductance,alphas,'alpha','Avg cluster condutance','Conductance vs alpha')
-	#print getClusters(graph_list,10,0.4)
+	# alphas = np.arange(0.2,1.2,0.2)
+	# density = []
+	# conductance = []
+	# for alpha in alphas:
+	# 	den, cond = getClusters(graph_list,10,alpha)
+	# 	density.append(den)
+	# 	conductance.append(cond)
+	# plotData(density,alphas,'alpha','Avg. cluster density','Density vs alpha')
+	# plotData(conductance,alphas,'alpha','Avg cluster condutance','Conductance vs alpha')
+	print getClusters(graph_list,5,0.5)
 if __name__ == '__main__':
 	main()

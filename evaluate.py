@@ -3,7 +3,9 @@ import networkx as nx
 import preprocessing as pre
 
 def printAverageNodesInCluster(colors):
-    print {c:len(colors[c]) for c in colors}
+    num_nodes = {c:len(colors[c]) for c in colors}
+    print num_nodes
+    print 'Avg. number of nodes in cluster = ', np.mean(num_nodes.values())
 
 def evaluateClusters(labels, graph_list):
     order = sorted(graph_list[0].nodes())
@@ -16,6 +18,7 @@ def evaluateClusters(labels, graph_list):
 	else:
 	    colors[c] = [order[i]]
 
+    printAverageNodesInCluster(colors)
     density = np.zeros((num_layers,len(colors)))
     conductance = np.zeros((num_layers,len(colors)))
     for i,g in enumerate(graph_list):
