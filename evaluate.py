@@ -4,18 +4,17 @@ import preprocessing as pre
 
 def printAverageNodesInCluster(colors):
     print {c:len(colors[c]) for c in colors}
-    
+
 def evaluateClusters(labels, graph_list):
     order = sorted(graph_list[0].nodes())
     colors = {}
+    num_clusters = len(colors)
     num_layers = len(graph_list)
     for i,c in enumerate(labels):
         if c in colors:
             colors[c] += [order[i]]
 	else:
 	    colors[c] = [order[i]]
-
-
 
     density = np.zeros((num_layers,len(colors)))
     conductance = np.zeros((num_layers,len(colors)))
@@ -39,8 +38,8 @@ def evaluateClusters(labels, graph_list):
     print np.mean(density,axis=0)
     print "Conductance found for each cluster across all layers:"
     print np.mean(conductance,axis=0)
-    mean_density = np.sum(np.mean(density,axis=0))/num_layers
-    mean_conductance = np.sum(np.mean(conductance,axis=0))/num_layers
+    mean_density = np.mean(np.mean(density,axis=0))
+    mean_conductance = np.mean(np.mean(conductance,axis=0))
     return mean_density, mean_conductance
 
         

@@ -97,6 +97,6 @@ def main():
 		conductance.append(cond)
 	plotData(density,alphas,'alpha','Avg. cluster density','Density vs alpha')
 	plotData(conductance,alphas,'alpha','Avg cluster condutance','Conductance vs alpha')
-
+	#print getClusters(graph_list,10,0.4)
 if __name__ == '__main__':
 	main()

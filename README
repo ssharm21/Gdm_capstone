@@ -1,0 +1,6 @@
+Since data was taken from a publicly accessible domain. Both data and implementation of paper 2 (Clustering on Multi-Layer Graphs via Subspace Analysis on Grassmann Manifolds by Xiaowen Dong et al.) is present on this repo: https://github.com/ssharm21/Gdm_capstone
+
+Steps to run code
+1. Git clone https://github.com/ssharm21/Gdm_capstone
+2. cd into the clones directory, make sure a data folder is present with 3 edge lists.
+4. run <python mlg_clustering.py>
